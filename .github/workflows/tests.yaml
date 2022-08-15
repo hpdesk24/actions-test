@@ -1,0 +1,33 @@
+name: Run API tests
+on:
+  schedule:
+    - cron: '30 7 * * 2'
+    - cron: '30 7 * * 3' 
+  workflow_dispatch:
+    inputs:
+        environment:
+          description: 'Environment'
+          required: true
+          default: 'staging' 
+          type: choice
+          options:
+          - staging
+          - development
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Set staging env
+        if: ${{ inputs.environment == 'staging' || github.event.schedule == '30 7 * * 2'}}
+        run: |
+          echo "test_env=staging" >> $GITHUB_ENV    
+      - name: Set dev env
+        if: ${{ inputs.environment == 'development' || github.event.schedule == '30 7 * * 3'}}
+        run: |
+          echo "test_env=development" >> $GITHUB_ENV    
+      - name: Run tests
+        working-directory: ./test-framework
+        run: WORK_ENV=${{ env.test_env }} && echo $WORK_ENV
