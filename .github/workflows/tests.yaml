@@ -1,7 +1,7 @@
 name: Run API tests
 on:
   schedule:
-    - cron: '47 18 * * 1'
+    - cron: '50 18 * * 1'
     - cron: '55 18 * * 1' 
   workflow_dispatch:
     inputs:
@@ -21,11 +21,11 @@ jobs:
 
     steps:
       - name: Set staging env
-        if: ${{ inputs.environment == 'staging' || github.event.schedule == '47 18 * * 1'}}
+        if: ${{ inputs.environment == 'staging' || github.event.schedule == '50 18 * * 1'}}
         run: |
           echo "test_env=staging" >> $GITHUB_ENV    
       - name: Set dev env
-        if: ${{ inputs.environment == 'development' || github.event.schedule == '55 18 * * 1''}}
+        if: ${{ inputs.environment == 'development' || github.event.schedule == '55 18 * * 1'}}
         run: |
           echo "test_env=development" >> $GITHUB_ENV    
       - name: Run tests
