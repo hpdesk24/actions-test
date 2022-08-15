@@ -29,5 +29,4 @@ jobs:
         run: |
           echo "test_env=development" >> $GITHUB_ENV    
       - name: Run tests
-        working-directory: ./test-framework
         run: WORK_ENV=${{ env.test_env }} && echo $WORK_ENV
