@@ -29,5 +29,5 @@ jobs:
         run: |
           echo "test_env=development" >> $GITHUB_ENV    
       - name: Run tests
-        uses: ./
+        working-directory: ./
         run: WORK_ENV=${{ env.test_env }} node qq.js
