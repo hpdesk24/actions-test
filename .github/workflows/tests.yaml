@@ -20,6 +20,10 @@ jobs:
     timeout-minutes: 30
 
     steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
       - name: Set staging env
         if: ${{ inputs.environment == 'staging' || github.event.schedule == '15 19 * * 1'}}
         run: |
@@ -29,5 +33,4 @@ jobs:
         run: |
           echo "test_env=development" >> $GITHUB_ENV    
       - name: Run tests
-        working-directory: ./
         run: WORK_ENV=${{ env.test_env }} node qq.js
